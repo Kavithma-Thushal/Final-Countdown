@@ -9,6 +9,7 @@ death day in a simple and interactive way.
 ✅ CSS<br/>
 ✅ JavaScript<br/>
 ✅ Bootstrap<br/>
+✅ JQuery<br/>
 
 ## 🚀 Features
 
