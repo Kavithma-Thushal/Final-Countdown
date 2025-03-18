@@ -1,22 +1,21 @@
 $(document).ready(function () {
     $("#calculateBtn").click(function () {
-        let birthYear = $("#birthYear").val();
+        let birthDate = $("#birthDate").val();
         let lifespan = $("#lifespan").val();
-        let currentYear = new Date().getFullYear();
 
-        if (!birthYear || !lifespan) {
-            alert("Please enter both Birth Year and Expected Lifespan!");
+        if (!birthDate || !lifespan) {
+            alert("Please enter both Birth Date and Expected Lifespan!");
             return;
         }
 
-        let deathYear = parseInt(birthYear) + parseInt(lifespan);
-        let yearsLeft = deathYear - currentYear;
-        let daysLeft = yearsLeft * 365;
+        let birthDateObj = new Date(birthDate);
+        let currentDate = new Date();
+        let deathDate = new Date(birthDateObj);
+        deathDate.setFullYear(deathDate.getFullYear() + parseInt(lifespan));
 
-        if (yearsLeft <= 0) {
-            $("#countdownResult").html(`You have reached the end! 🏁`);
-        } else {
-            $("#countdownResult").html(`You have approximately <strong>${daysLeft}</strong> days left to live. ⏳`);
-        }
+        let timeDiff = deathDate - currentDate;
+        let daysLeft = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+
+        $("#countdownResult").html(`You have approximately <strong>${daysLeft}</strong> days left to live!`);
     });
 });

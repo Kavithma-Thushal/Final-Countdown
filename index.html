@@ -10,13 +10,13 @@
 
 <body>
 <div class="container text-center">
-    <h1 class="title">Final Countdown ⏳</h1>
-    <p class="subtitle">Enter your birth year and expected lifespan to see your remaining days.</p>
+    <h1 class="title">⏳ Final Countdown ⏳</h1>
+    <p class="subtitle mt-4">Enter your birth date and expected lifespan to see your remaining days.</p>
 
     <div class="input-container">
-        <input type="number" id="birthYear" placeholder="Enter Birth Year" class="form-control">
-        <input type="number" id="lifespan" placeholder="Expected Lifespan (years)" class="form-control">
-        <button id="calculateBtn" class="btn btn-danger">Start Countdown</button>
+        <input type="date" id="birthDate" class="form-control mt-4">
+        <input type="number" id="lifespan" placeholder="Expected Lifespan (years)" class="form-control mt-3">
+        <button id="calculateBtn" class="btn btn-danger mt-2">Start Countdown</button>
     </div>
 
     <div id="countdownResult" class="countdown-result"></div>
