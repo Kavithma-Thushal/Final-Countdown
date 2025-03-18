@@ -5,24 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Final Countdown</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
-<div class="container text-center">
-    <h1 class="title">⏳ Final Countdown ⏳</h1>
-    <p class="subtitle mt-4">Enter your birth date and expected lifespan to see your remaining days.</p>
+<body class="bg-dark text-white">
+<div class="container text-center py-5">
+    <h1 class="display-4 mb-4">⏳ Final Countdown ⏳</h1>
+    <p class="lead mb-4">Enter your birth date and expected lifespan to see your remaining days.</p>
 
     <div class="input-container">
-        <input type="date" id="birthDate" class="form-control mt-4">
-        <input type="number" id="lifespan" placeholder="Expected Lifespan (years)" class="form-control mt-3">
-        <button id="calculateBtn" class="btn btn-danger mt-2">Start Countdown</button>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <input type="date" id="birthDate" class="form-control mb-3">
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <input type="number" id="lifespan" placeholder="Expected Lifespan (years)" class="form-control mb-3">
+            </div>
+        </div>
+        <button id="calculateBtn" class="btn btn-danger">Start Countdown</button>
     </div>
 
-    <div id="countdownResult" class="countdown-result"></div>
+    <div id="countdownResult" class="mt-4 fs-3 fw-bold"></div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="scripts.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#calculateBtn").click(function () {
+            let birthDate = $("#birthDate").val();
+            let lifespan = $("#lifespan").val();
+
+            if (!birthDate || !lifespan) {
+                alert("Please enter both Birth Date and Expected Lifespan!");
+                return;
+            }
+
+            let birthDateObj = new Date(birthDate);
+            let currentDate = new Date();
+            let deathDate = new Date(birthDateObj);
+            deathDate.setFullYear(deathDate.getFullYear() + parseInt(lifespan));
+
+            let timeDiff = deathDate - currentDate;
+            let daysLeft = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+
+            $("#countdownResult").html(`You have approximately <strong>${daysLeft}</strong> days left to live!`);
+        });
+    });
+</script>
 </body>
 </html>
