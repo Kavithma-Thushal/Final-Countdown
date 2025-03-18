@@ -10,7 +10,7 @@
 <body class="bg-dark text-white">
 <div class="container text-center py-5">
     <h1 class="display-4 mb-4">⏳ Final Countdown ⏳</h1>
-    <p class="lead mb-4">Enter your birth date and expected lifespan to see your remaining days.</p>
+    <p class="lead mb-4">Enter your birth date and expected lifespan to see your remaining time.</p>
 
     <div class="input-container">
         <div class="row justify-content-center">
@@ -26,7 +26,9 @@
         <button id="calculateBtn" class="btn btn-danger">Start Countdown</button>
     </div>
 
-    <div id="countdownResult" class="mt-4 fs-3 fw-bold"></div>
+    <div id="countdownResult" class="mt-4">
+        <div class="row justify-content-center" id="countdownBins"></div>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -42,14 +44,54 @@
             }
 
             let birthDateObj = new Date(birthDate);
-            let currentDate = new Date();
             let deathDate = new Date(birthDateObj);
             deathDate.setFullYear(deathDate.getFullYear() + parseInt(lifespan));
 
-            let timeDiff = deathDate - currentDate;
-            let daysLeft = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            function updateCountdown() {
+                let timeDiff = deathDate - new Date();
+                if (timeDiff <= 0) {
+                    clearInterval(countdownInterval);
+                    $("#countdownResult").html(`<h3>You have reached the end! 🏁</h3>`);
+                } else {
+                    let daysLeft = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                    let hoursLeft = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    let minutesLeft = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                    let secondsLeft = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
-            $("#countdownResult").html(`You have approximately <strong>${daysLeft}</strong> days left to live!`);
+                    let countdownHtml = `
+                        <div class="col-md-3 mb-3">
+                            <div class="alert alert-info">
+                                <p>Days</p>
+                                <h4>${daysLeft}</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="alert alert-warning">
+                                <p>Hours</p>
+                                <h4>${hoursLeft}</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="alert alert-success">
+                                <p>Minutes</p>
+                                <h4>${minutesLeft}</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="alert alert-danger">
+                                <p>Seconds</p>
+                                <h4>${secondsLeft}</h4>
+                            </div>
+                        </div>
+                    `;
+
+                    $("#countdownBins").html(countdownHtml);
+                }
+            }
+
+            // Start the countdown
+            updateCountdown();
+            const countdownInterval = setInterval(updateCountdown, 1000);
         });
     });
 </script>
